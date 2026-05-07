@@ -2,6 +2,7 @@ const db = require('../config/db');
 const PDFDocument = require('pdfkit');
 const fs = require('fs');
 const path = require('path');
+const emailService = require('../utils/emailService');
 
 exports.generateCertificate = async (req, res) => {
     const { cadet_id, type, camp_name } = req.body; // type: Camp Participation, Achievement, etc.
@@ -43,6 +44,10 @@ exports.generateCertificate = async (req, res) => {
             'INSERT INTO certificates (cadet_id, type, issue_date, file_path, certificate_no) VALUES (?, ?, ?, ?, ?)',
             [cadet_id, type, issue_date, relativePath, certificate_no]
         );
+
+        if (cadet.email) {
+            await emailService.sendCertificateNotice(cadet.email, type || camp_name).catch(err => console.error('Email failed:', err));
+        }
 
         res.status(201).json({ message: 'Certificate generated successfully', file_path: relativePath });
     } catch (err) {

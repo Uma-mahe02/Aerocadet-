@@ -1,4 +1,5 @@
 const db = require('../config/db');
+const emailService = require('../utils/emailService');
 
 exports.createCamp = async (req, res) => {
     const { name, date, location, description } = req.body;
@@ -7,6 +8,13 @@ exports.createCamp = async (req, res) => {
             'INSERT INTO camps (name, date, location, description) VALUES (?, ?, ?, ?)',
             [name, date, location, description]
         );
+
+        const [cadets] = await db.execute('SELECT email FROM cadets WHERE email IS NOT NULL AND email != ""');
+        const emails = cadets.map(c => c.email);
+        if (emails.length > 0) {
+            await emailService.sendCampNotice(emails, name, date).catch(err => console.error('Email failed:', err));
+        }
+
         res.status(201).json({ message: 'Camp created successfully' });
     } catch (err) {
         res.status(500).json({ message: 'Failed to create camp', error: err.message });

@@ -1,22 +1,22 @@
 :root {
-    --iaf-blue: #1e3a5f;
-    --iaf-sky: #87ceeb;
-    --iaf-saffron: #ff9933;
-    --iaf-green: #138808;
-    --combat-gold: #d4af37;
-    --primary: #1e3a5f;
-    --secondary: #2c5364;
-    --accent: #ff9933;
-    --bg-dark: #0f172a;
+    --iaf-blue: #333333;
+    --iaf-sky: #ecf0f1;
+    --iaf-saffron: #95a5a6;
+    --iaf-green: #7f8c8d;
+    --combat-gold: #bdc3c7;
+    --primary: #000000;
+    --secondary: #222222;
+    --accent: #666666;
+    --bg-dark: #111111;
     --bg-light: #f8fafc;
     --text-dark: #1e293b;
     --text-light: #f1f5f9;
     --glass: rgba(255, 255, 255, 0.05);
-    --glass-heavy: rgba(15, 23, 42, 0.85);
+    --glass-heavy: rgba(0, 0, 0, 0.85);
     --glass-border: rgba(255, 255, 255, 0.15);
-    --glow-gold: 0 0 15px rgba(212, 175, 55, 0.3);
+    --glow-gold: 0 0 15px rgba(255, 255, 255, 0.3);
     --shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
-    --military-font: 'Inter', system-ui, -apple-system, sans-serif;
+    --military-font: 'Arial', sans-serif;
 }
 
 @keyframes fadeInScale {
@@ -41,6 +41,13 @@
         opacity: 1;
         transform: translateX(0);
     }
+}
+
+.glorious-text {
+    font-family: 'Inter', Arial, sans-serif;
+    display: inline-block;
+    text-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+    letter-spacing: 1px;
 }
 
 * {
@@ -81,15 +88,15 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: linear-gradient(rgba(15, 23, 42, 0.7), rgba(15, 23, 42, 0.8)),
-        url('https://images.unsplash.com/photo-1544473244-f6895e69ad93?auto=format&fit=crop&q=80&w=2000') no-repeat center center/cover;
+    background: linear-gradient(rgba(10, 10, 10, 0.75), rgba(0, 0, 0, 0.85)),
+        url('../images/hdiafparade.png') no-repeat center center/cover;
     padding: 2rem;
 }
 
 .auth-form {
     width: 100%;
     max-width: 450px;
-    background: rgba(15, 23, 42, 0.85);
+    background: rgba(25, 25, 25, 0.85); /* Compact grey theme */
     backdrop-filter: blur(20px);
     padding: 3.5rem;
     border-radius: 30px;
@@ -134,6 +141,20 @@ body {
     color: white;
     font-weight: 500;
     transition: all 0.3s;
+    appearance: none;
+}
+
+.form-group select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 1.2em;
+    padding-right: 3rem !important;
+}
+
+.form-group select option {
+    background-color: var(--bg-dark);
+    color: white;
 }
 
 .form-group input:focus,
@@ -145,49 +166,67 @@ body {
     box-shadow: 0 0 0 4px rgba(135, 206, 235, 0.1);
 }
 
+/* Fix for Light Dashboard Cards: Make input text dark */
+.glass-card:not(.glass-dark) .form-group input,
+.glass-card:not(.glass-dark) .form-group select,
+.glass-card:not(.glass-dark) .form-group textarea {
+    color: var(--text-dark);
+    background: rgba(241, 245, 249, 0.8);
+    /* a slightly dark, visible fill for the white card */
+    border: 1px solid #cbd5e1;
+}
+
+.glass-card:not(.glass-dark) .form-group input:focus,
+.glass-card:not(.glass-dark) .form-group select:focus,
+.glass-card:not(.glass-dark) .form-group textarea:focus {
+    background: white;
+    border-color: var(--iaf-blue);
+    box-shadow: 0 0 0 4px rgba(30, 58, 95, 0.1);
+}
+
 .btn {
     display: inline-block;
-    padding: 1rem 2rem;
+    padding: 0.8rem 2rem;
     border: none;
-    border-radius: 14px;
+    border-radius: 8px;
     cursor: pointer;
-    font-weight: 800;
+    font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 1.5px;
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transition: all 0.3s ease;
     text-decoration: none;
     font-size: 0.85rem;
 }
 
 .btn-primary {
-    background: var(--iaf-sky);
-    color: var(--iaf-blue);
-    box-shadow: 0 4px 15px rgba(135, 206, 235, 0.3);
+    background: white;
+    color: black;
+    box-shadow: 0 4px 15px rgba(255, 255, 255, 0.1);
 }
 
 .btn-primary:hover {
-    background: white;
-    transform: translateY(-3px);
-    box-shadow: 0 8px 25px rgba(135, 206, 235, 0.4);
+    background: #e2e8f0;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 255, 255, 0.2);
 }
 
 .btn-accent {
-    background: var(--iaf-saffron);
+    background: transparent;
     color: white;
-    box-shadow: 0 4px 15px rgba(255, 153, 51, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.5);
 }
 
 .btn-accent:hover {
-    background: #ffaa55;
-    transform: translateY(-3px);
-    box-shadow: 0 8px 25px rgba(255, 153, 51, 0.4);
+    background: rgba(255, 255, 255, 0.1);
+    border-color: white;
+    transform: translateY(-2px);
 }
 
 /* Navbar */
 nav {
-    background: var(--primary);
-    color: white;
-    padding: 1rem 0;
+    background: var(--bg-light);
+    color: black;
+    padding: 0.5rem 0;
 }
 
 nav .container {
@@ -206,9 +245,9 @@ nav ul li {
 }
 
 nav ul li a {
-    color: white;
+    color: black;
     text-decoration: none;
-    font-weight: 500;
+    font-weight: bold;
 }
 
 /* UI Enhancements */
@@ -305,6 +344,24 @@ nav ul li a {
 .sidebar-menu {
     list-style: none;
     flex-grow: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    margin-bottom: 1rem;
+    padding-right: 0.5rem;
+}
+
+.sidebar-menu::-webkit-scrollbar {
+    width: 4px;
+}
+
+.sidebar-menu::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 4px;
+}
+
+.sidebar-menu::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
 }
 
 .sidebar-menu li {
@@ -332,6 +389,8 @@ nav ul li a {
 .main-content {
     flex-grow: 1;
     overflow-y: auto;
+    overflow-x: hidden;
+    min-width: 0;
     padding: 2.5rem 4rem;
 }
 

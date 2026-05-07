@@ -43,3 +43,20 @@ exports.evaluateRank = async (req, res) => {
         res.status(500).json({ message: 'Evaluation failed', error: err.message });
     }
 };
+
+exports.removeCadet = async (req, res) => {
+    const { id } = req.params;
+    try {
+        // Because of FOREIGN KEY ... ON DELETE SET NULL, the related user will remain but detached.
+        // We could delete the user directly if we want to erase everything.
+        // Let's delete the user who references this cadet first, then the cadet.
+        await db.execute('DELETE FROM users WHERE cadet_ref_id = ?', [id]);
+        
+        const [result] = await db.execute('DELETE FROM cadets WHERE id = ?', [id]);
+        if (result.affectedRows === 0) return res.status(404).json({ message: 'Cadet not found' });
+        
+        res.json({ message: 'Squadron member and portal access permanently removed' });
+    } catch (err) {
+        res.status(500).json({ message: 'Failed to remove cadet', error: err.message });
+    }
+};
