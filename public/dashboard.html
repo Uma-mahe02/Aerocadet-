@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQUADRON COMMAND | AirWing NCC</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="dashboard-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div
+                    style="width: 40px; height: 40px; background: var(--iaf-saffron); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 900; color: white;">
+                    IAF</div>
+                <span>NCC AIRWING</span>
+            </div>
+
+            <ul class="sidebar-menu" id="sidebarMenu">
+                <!-- Dynamically filled based on role in JS -->
+            </ul>
+
+            <button onclick="logout()" class="btn btn-accent"
+                style="width: 100%; margin-top: auto; padding: 1rem; border-radius: 12px; letter-spacing: 1px;">LOGOUT</button>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="content-header">
+                <div>
+                    <h1 id="viewTitle" style="color: var(--iaf-blue); letter-spacing: 1px; text-transform: uppercase;">
+                        Squadron Overview</h1>
+                    <p id="currentDate"
+                        style="color: #64748b; font-weight: 500; font-size: 0.85rem; margin-top: 0.5rem;"></p>
+                </div>
+                <div
+                    style="display: flex; align-items: center; gap: 1.5rem; background: white; padding: 0.75rem 1.5rem; border-radius: 50px; border: 1px solid #e2e8f0; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+                    <div style="text-align: right;">
+                        <p id="userName" style="font-weight: 800; color: var(--iaf-blue); font-size: 1rem;"></p>
+                        <p id="userRole"
+                            style="font-size: 0.65rem; color: #64748b; text-transform: uppercase; font-weight: 700; letter-spacing: 1px;">
+                        </p>
+                    </div>
+                </div>
+            </header>
+
+            <div id="dynamicContent">
+                <!-- Data will be loaded here -->
+            </div>
+        </main>
+    </div>
+
+    <script src="js/dashboard.js"></script>
+    <script>
+        document.getElementById('currentDate').innerText = new Date().toLocaleDateString('en-IN', {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        }).toUpperCase();
+
+        window.onload = () => {
+            const token = localStorage.getItem('token');
+            if (!token) window.location.href = 'login.html';
+
+            const user = JSON.parse(localStorage.getItem('user'));
+            document.getElementById('userName').innerText = user.name.toUpperCase();
+            document.getElementById('userRole').innerText = user.role;
+
+            setupSidebar(user.role);
+            loadView('overview');
+        };
+
+        function setupSidebar(role) {
+            const nav = document.getElementById('sidebarMenu');
+            let links = `<li><a href="#" onclick="loadView('overview')" id="nav-overview" class="active"><span>Overview</span></a></li>`;
+
+            if (role === 'Student') {
+                links += `
+                    <li><a href="#" onclick="loadView('profile')" id="nav-profile"><span>Pilot Profile</span></a></li>
+                    <li><a href="#" onclick="loadView('camps')" id="nav-camps"><span>Flight Camps</span></a></li>
+                    <li><a href="#" onclick="loadView('announcements')" id="nav-announcements"><span>Squadron Orders</span></a></li>
+                    <li><a href="#" onclick="loadView('documents')" id="nav-documents"><span>Logbook Docs</span></a></li>
+                    <li><a href="#" onclick="loadView('certificates')" id="nav-certificates"><span>Aero Certificates</span></a></li>
+                `;
+            } else {
+                links += `
+                    <li><a href="#" onclick="loadView('manage-cadets')" id="nav-manage-cadets"><span>Cadet Squadron</span></a></li>
+                    <li><a href="#" onclick="loadView('manage-camps')" id="nav-manage-camps"><span>Command Camps</span></a></li>
+                    <li><a href="#" onclick="loadView('post-announcement')" id="nav-post-announcement"><span>Issue Orders</span></a></li>
+                    <li><a href="#" onclick="loadView('verify-docs')" id="nav-verify-docs"><span>Verify Logs</span></a></li>
+                    <li><a href="#" onclick="loadView('gen-certs')" id="nav-gen-certs"><span>Generate Certs</span></a></li>
+                `;
+            }
+            nav.innerHTML = links;
+        }
+
+        function logout() {
+            localStorage.clear();
+            window.location.href = 'login.html';
+        }
+
+        // Helper to update active link
+        const originalLoadView = loadView;
+        loadView = (view) => {
+            document.querySelectorAll('.sidebar-menu a').forEach(a => a.classList.remove('active'));
+            const activeLink = document.getElementById('nav-' + view);
+            if (activeLink) activeLink.classList.add('active');
+            originalLoadView(view);
+        };
+    </script>
+</body>
+
+</html>

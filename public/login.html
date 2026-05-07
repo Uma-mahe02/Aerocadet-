@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | AirWing NCC</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+</head>
+
+<body class="auth-container">
+    <div class="auth-form">
+        <div style="display: flex; justify-content: center; margin-bottom: 2rem;">
+            <div
+                style="width: 60px; height: 60px; background: var(--iaf-saffron); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 900; color: white; font-size: 1.2rem; box-shadow: var(--glow-gold);">
+                IAF</div>
+        </div>
+        <h2>AEROCADET LOGIN</h2>
+        <form id="loginForm">
+            <div class="form-group">
+                <label>USERNAME</label>
+                <input type="text" id="username" required placeholder="Enter callsing">
+            </div>
+            <div class="form-group">
+                <label>PASSWORD</label>
+                <input type="password" id="password" required placeholder="••••••••">
+            </div>
+            <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1.5rem;">LOGIN</button>
+            <p style="text-align: center; margin-top: 2rem; font-size: 0.85rem; color: rgba(255,255,255,0.5);">New
+                Recruit? <a href="register.html"
+                    style="color: var(--iaf-sky); text-decoration: none; font-weight: 700;">Sign In</a></p>
+        </form>
+    </div>
+    <script src="js/auth.js"></script>
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            const response = await fetch('/api/auth/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username, password })
+            });
+
+            const data = await response.json();
+            if (response.ok) {
+                localStorage.setItem('token', data.token);
+                localStorage.setItem('user', JSON.stringify(data.user));
+                window.location.href = 'dashboard.html';
+            } else {
+                alert(data.message);
+            }
+        });
+    </script>
+</body>
+
+</html>

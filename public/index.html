@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aerocadet | Smart Management System</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        .hero {
+            height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('images/landscpiaflogo.jpeg');
+            background-size: cover;
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            max-width: 800px;
+            margin-bottom: 2rem;
+        }
+
+        .features {
+            padding: 5rem 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <nav>
+        <div class="container"
+            style="display: flex; justify-content: space-between; align-items: center; width: 90%; max-width: 1200px; margin: auto; padding: 0.5rem 0;">
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <div style="width: 35px; height: 35px; display: flex; align-items: center; justify-content: center; border-radius: 50%; background-color: white; overflow: hidden;">
+                    <img src="images/ncclogoblack.jpeg" alt="NCC" style="width: 100%; height: auto; object-fit: contain;">
+                </div>
+                <h2 id="logo" style="text-transform: none; font-family: 'Georgia', serif; font-size: 1.5rem; font-weight: bold; margin-left: 5px;">Aerocadet</h2>
+            </div>
+            <ul style="display: flex; list-style: none; align-items: center; gap: 2.5rem; font-family: 'Georgia', serif; font-size: 1rem;">
+                <li><a href="#features" style="color: black; text-decoration: none; transition: opacity 0.3s;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">MISSION</a></li>
+                <li><a href="login.html" style="color: black; text-decoration: none; transition: opacity 0.3s;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">LOGIN</a></li>
+                <li><a href="register.html" style="color: black; text-decoration: none; transition: opacity 0.3s;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">SIGN IN</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <header class="hero" style="height: 100vh;">
+        <div style="animation: fadeInScale 1s ease-out; width: 100%; display: flex; justify-content: flex-end; padding-right: 8%; text-align: right;">
+            <div style="max-width: 650px;">
+                <h1 class="glorious-text" style="margin-bottom: 2rem; line-height: 1.1;">Touch the Sky <br> <span
+                        style="color: var(--iaf-sky);">With Glory</span></h1>
+                <p style="margin: 0 0 3rem auto; font-size: 1.3rem; line-height: 1.6; opacity: 0.85;">The unified digital
+                    command for the Indian Air Force NCC Air Wing. <br> Precision logistics for the next generation of
+                    aviators.</p>
+            </div>
+        </div>
+    </header>
+
+    <section id="features" style="background-color: #e2e8f0; padding: 8rem 0;">
+        <div style="max-width: 1200px; margin: auto; padding: 0 1rem;">
+        <div style="text-align: center; margin-bottom: 5rem;">
+            <h2 style="font-size: 2.5rem; color: var(--iaf-blue); text-transform: uppercase; letter-spacing: 2px;">
+                Operational Excellence</h2>
+            <div style="width: 80px; height: 4px; background: var(--iaf-saffron); margin: 1.5rem auto;"></div>
+        </div>
+
+        <div class="features-grid">
+            <div class="feature-card">
+                <div style="font-size: 3rem; margin-bottom: 1.5rem;">🛡️</div>
+                <h3>Discipline & Duty</h3>
+                <p>Instilling a deep sense of duty, discipline, and commitment inspired by the Indian Air Force.</p>
+            </div>
+            <div class="feature-card">
+                <div style="font-size: 3rem; margin-bottom: 1.5rem;">🦅</div>
+                <h3>Leadership Command</h3>
+                <p>Developing confident leaders capable of decision-making, teamwork, and national service.</p>
+            </div>
+            <div class="feature-card">
+                <div style="font-size: 3rem; margin-bottom: 1.5rem;">✈️</div>
+                <h3>Aviation Training</h3>
+                <p>Delivering structured training programs to build strong aerospace knowledge and flight awareness.</p>
+            </div>
+            <div class="feature-card">
+                <div style="font-size: 3rem; margin-bottom: 1.5rem;">🇮🇳</div>
+                <h3>Nation First</h3>
+                <p>Preparing cadets to serve the nation with honor, courage, and dedication.</p>
+            </div>
+        </div>
+        </div>
+    </section>
+
+    <footer style="background: var(--primary); color: white; padding: 2rem 0; text-align: center; margin-top: 4rem;">
+        <p>&copy; 2026 Aerocadet Management System. All Rights Reserved.</p>
+    </footer>
+</body>
+
+</html>

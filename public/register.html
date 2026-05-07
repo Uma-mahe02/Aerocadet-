@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register | AirWing NCC</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+</head>
+
+<body class="auth-container" style="height: auto; padding: 5rem 0;">
+    <div class="auth-form" style="max-width: 550px;">
+        <div style="display: flex; justify-content: center; margin-bottom: 2rem;">
+            <div
+                style="width: 60px; height: 60px; background: var(--iaf-saffron); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 900; color: white; font-size: 1.2rem; box-shadow: var(--glow-gold);">
+                IAF</div>
+        </div>
+        <h2>SQUADRON ENLISTMENT</h2>
+        <p
+            style="text-align: center; color: rgba(255,255,255,0.6); margin-bottom: 2.5rem; font-size: 0.85rem; font-weight: 600; letter-spacing: 1px;">
+            INITIALIZE CADET DATABASE ENTRY</p>
+
+        <form id="registerForm">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+                <div class="form-group">
+                    <label>FULL LEGAL NAME</label>
+                    <input type="text" id="name" required placeholder="J. DOE">
+                </div>
+                <div class="form-group">
+                    <label>SQUADRON CALLSIGN</label>
+                    <input type="text" id="username" required placeholder="chosen_id">
+                </div>
+                <div class="form-group">
+                    <label>ACCESS CODE</label>
+                    <input type="password" id="password" required placeholder="••••••••">
+                </div>
+                <div class="form-group">
+                    <label>ASSIGNED ROLE</label>
+                    <select id="role" onchange="toggleCadetFields()" style="height: 52px;">
+                        <option value="Student">CADET (PILOT)</option>
+                        <option value="CTO">COMMAND OFFICER (CTO)</option>
+                        <option value="Admin">CORE COMMAND (ADMIN)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div id="cadetFields">
+                <div style="margin: 2rem 0; height: 1px; background: rgba(255,255,255,0.1);"></div>
+                <h4 style="color: var(--iaf-saffron); margin-bottom: 1.5rem; font-size: 0.9rem; letter-spacing: 1px;">
+                    MISSION-CRITICAL DETAILS</h4>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+                    <div class="form-group">
+                        <label>OFFICIAL CADET ID</label>
+                        <input type="text" id="cadet_id" placeholder="NCC/AW/XXXX">
+                    </div>
+                    <div class="form-group">
+                        <label>WING / SQUADRON</label>
+                        <input type="text" id="department" placeholder="Engineers / Pilots">
+                    </div>
+                    <div class="form-group">
+                        <label>COMM LINK (CONTACT)</label>
+                        <input type="text" id="contact" placeholder="+91 XXXX">
+                    </div>
+                    <div class="form-group">
+                        <label>DIGITAL TERMINAL (EMAIL)</label>
+                        <input type="email" id="email" placeholder="cadet@squadron.com">
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 2rem;">FINALIZE
+                ENLISTMENT</button>
+            <p style="text-align: center; margin-top: 2rem; font-size: 0.85rem; color: rgba(255,255,255,0.5);">Already
+                Enlisted? <a href="login.html"
+                    style="color: var(--iaf-sky); text-decoration: none; font-weight: 700;">Authenticate Portal</a></p>
+        </form>
+    </div>
+
+    <script>
+        function toggleCadetFields() {
+            const role = document.getElementById('role').value;
+            const fields = document.getElementById('cadetFields');
+            fields.style.display = role === 'Student' ? 'block' : 'none';
+        }
+
+        document.getElementById('registerForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const role = document.getElementById('role').value;
+            const payload = {
+                name: document.getElementById('name').value,
+                username: document.getElementById('username').value,
+                password: document.getElementById('password').value,
+                role: role
+            };
+
+            if (role === 'Student') {
+                payload.cadetDetails = {
+                    name: payload.name,
+                    cadet_id: document.getElementById('cadet_id').value,
+                    department: document.getElementById('department').value,
+                    contact: document.getElementById('contact').value,
+                    email: document.getElementById('email').value
+                };
+            }
+
+            const response = await fetch('/api/auth/register', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+
+            const data = await response.json();
+            if (response.ok) {
+                alert('Registration successful! Please login.');
+                window.location.href = 'login.html';
+            } else {
+                alert(data.message);
+            }
+        });
+    </script>
+</body>
+
+</html>
